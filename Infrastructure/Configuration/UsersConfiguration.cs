@@ -10,7 +10,6 @@ namespace Infrastructure.Configuration
         {
             builder.Property(x => x.Name);
             builder.Property(x => x.SurName);
-            builder.Property(x => x.City).HasMaxLength(50);
 
         }
     }

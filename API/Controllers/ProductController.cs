@@ -1,14 +1,34 @@
 ﻿using Application.Categories.Command;
 using Application.Dto;
 using Application.Products.Command;
+using Application.Products.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : BaseController
     {
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = new GetAllProducts();
+            return Ok(await Mediator.Send(products));
+        }
+
+
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetByCategoryId(int categoryId)
+        {
+            var getProductByCategory = new GetProductByCategoryId() { CategoryId = categoryId };
+            return Ok(await Mediator.Send(getProductByCategory));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateProduct createProduct)
         {
@@ -31,7 +51,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await Mediator.Send(new DeleteProduct { Id = id });
+            await Mediator.Send(new DeleteProduct { Id = id });
             return NoContent();
         }
     }

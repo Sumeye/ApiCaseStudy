@@ -1,6 +1,10 @@
-﻿namespace Application.Categories.Queries
+﻿using Application.Dto;
+using Domain.Entity;
+using MediatR;
+
+namespace Application.Categories.Queries
 {
-    public class GetAllCategories
+    public class GetAllCategories:IRequest<List<GetCategoriesDto>>
     {
     }
 }

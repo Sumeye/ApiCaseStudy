@@ -1,5 +1,7 @@
 ﻿using Application.Categories.Command;
+using Application.Categories.Queries;
 using Application.Dto;
+using Application.Products.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,6 +10,14 @@ namespace API.Controllers
     [ApiController]
     public class CategoryController : BaseController
     {
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var categories = new GetAllCategories();
+            return Ok(await Mediator.Send(categories));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateCategory createCategory)
         {
@@ -30,7 +40,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await Mediator.Send(new DeleteCategory { Id = id });
+             await Mediator.Send(new DeleteCategory { Id = id });
             return NoContent();
         }
     }

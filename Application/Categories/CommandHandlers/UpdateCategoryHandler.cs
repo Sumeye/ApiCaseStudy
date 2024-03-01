@@ -14,8 +14,7 @@ namespace Application.Categories.CommandHandlers
         }
         public async Task<int> Handle(UpdateCategory request, CancellationToken cancellationToken)
         {
-            //var update=_categoryRepository.Where(a=>a.CategoryId==request.Id).ToList();
-            //if (update.Any()) { }
+
             var updatedCategoryEntity = new Category()
             {
                 CategoryId = request.Id,
