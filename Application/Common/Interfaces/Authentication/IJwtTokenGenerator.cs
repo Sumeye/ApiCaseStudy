@@ -1,9 +1,10 @@
-﻿using Domain.Entity;
+﻿using Application.Dto;
+using Domain.Entity;
 
 namespace Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Users users);
+        TokenDto GenerateToken(UserApp users);
     }
 }

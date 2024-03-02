@@ -2,7 +2,7 @@
 
 namespace Domain.Entity
 {
-    public class Users:IdentityUser
+    public class UserApp:IdentityUser
     {
         public string Name { get; set; }
         public string SurName { get; set; }

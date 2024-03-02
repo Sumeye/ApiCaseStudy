@@ -2,6 +2,7 @@
 using Application.Dto;
 using Application.Products.Command;
 using Application.Products.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,18 +10,15 @@ namespace API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : BaseController
     {
-
-
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var products = new GetAllProducts();
             return Ok(await Mediator.Send(products));
         }
-
 
         [HttpGet("category/{categoryId}")]
         public async Task<IActionResult> GetByCategoryId(int categoryId)
@@ -35,7 +33,6 @@ namespace API.Controllers
             CreatedProductDto result = await Mediator.Send(createProduct);
             return Created("", result);
         }
-
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProduct updateProduct)

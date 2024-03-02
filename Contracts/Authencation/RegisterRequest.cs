@@ -2,6 +2,6 @@
 {
     public class RegisterRequest
     {
-        public  record SingInRequest(string FirstName, string LastName, string Email, string Password);
+        public  record SingInRequest(string FirstName, string LastName,string userName, string Email, string Password);
     }
 }

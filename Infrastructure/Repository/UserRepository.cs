@@ -1,37 +1,45 @@
-﻿using Domain.Entity;
+﻿using AutoMapper;
+using Domain.Entity;
 using Domain.Repository;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class UserRepository : GenericRepository<Users>, IUserRepository
+    public class UserRepository : GenericRepository<UserApp>, IUserRepository
     {
-        private readonly UserManager<Users> _userManager;
-        public UserRepository(AppDbContext context, UserManager<Users> userManager) : base(context)
+        private readonly UserManager<UserApp> _userManager;
+        private readonly IMapper _mapper;
+        public UserRepository(AppDbContext context, UserManager<UserApp> userManager, IMapper mapper) : base(context)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
-        public async Task<Users> GetUserByEmail(string email)
+        public async Task<UserApp> CreateUserAsync(UserApp createUserDto)
+        {
+            var user = new UserApp
+            {
+                Email = createUserDto.Email,
+                UserName = createUserDto.UserName,
+                Name = createUserDto.Name,
+                SurName = createUserDto.SurName,
+                PasswordHash = createUserDto.PasswordHash,
+            };
+            var result = await _userManager.CreateAsync(user, createUserDto.PasswordHash);
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(x => x.Description).ToList();
+
+            }
+            return user;
+        }
+
+
+        public async Task<UserApp?> GetUserByNameAsync(string userName)
         {
             // Belirli bir e-posta adresine sahip kullanıcıyı bul
-            Users user = await _userManager.FindByEmailAsync(email);
-
-            // Eğer kullanıcı bulunamadıysa istisna fırlat
-            if (user == null)
-            {
-                throw new Exception("User with given email does not exist");
-            }
-
-            // Kullanıcıyı döndür
-            return user;
+            return await _userManager.FindByNameAsync(userName);
         }
     }
 }

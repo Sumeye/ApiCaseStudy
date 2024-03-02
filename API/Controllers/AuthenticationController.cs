@@ -1,14 +1,15 @@
-﻿using Application.Services.Authentication;
-using Contracts.Authentication;
+﻿using Application.Dto;
+using Application.Services.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Contracts.Authentication.AuthentionResponse;
-using static Contracts.Authentication.LoginRequest;
-using static Contracts.Authentication.RegisterRequest;
+using static Application.Services.Authencation.AuthentionResult;
+
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : BaseController
     {
         private readonly IAuthenticationService _authenticationService;
@@ -18,32 +19,18 @@ namespace API.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("register")]
-        public IActionResult Register(SingInRequest request)
-        {
-            var authResult = _authenticationService.Register(request.FirstName, request.LastName, request.Email, request.Password);
-
-            var response = new AuthenticationResponse(
-               authResult.User.Id,
-               authResult.User.Name,
-               authResult.User.SurName,
-               authResult.User.Email,
-               authResult.Token);
-
-            return Ok(response);
-        }
 
         [HttpPost("login")]
-        public IActionResult Login(SignOnReguest request)
+        public IActionResult Login(LoginDto request)
         {
-            var authResult = _authenticationService.Login(request.Email, request.Password);
+            var authResult = _authenticationService.Login(request);
 
-            var response = new AuthenticationResponse(
-                authResult.Result.User.Id,
-                authResult.Result.User.Name,
-                authResult.Result.User.SurName,
-                authResult.Result.User.Email,
-                authResult.Result.Token);
+            var response = new TokenDto
+            { 
+                AccessToken =  authResult.Result.Token.AccessToken,
+                RefreshToken =  authResult.Result.Token.RefreshToken
+            };
+               
 
             return Ok(response);
         }

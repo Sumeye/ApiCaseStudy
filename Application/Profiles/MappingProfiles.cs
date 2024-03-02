@@ -26,7 +26,8 @@ namespace Application.Profiles
             CreateMap<Product, GetAllProducts>().ReverseMap();
             CreateMap<Product, GetProductsByCategoryIdDto>().ReverseMap();
 
-            CreateMap<Users, CreateUser>().ReverseMap();
+            CreateMap<UserApp, CreateUser>().ReverseMap();
+            CreateMap<UserApp, CreatedUserDto>().ReverseMap();
 
 
 

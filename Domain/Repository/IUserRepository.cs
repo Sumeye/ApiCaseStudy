@@ -2,8 +2,9 @@
 
 namespace Domain.Repository
 {
-    public interface IUserRepository : IGenericRepository<Users>
+    public interface IUserRepository : IGenericRepository<UserApp>
     {
-        Task<Users> GetUserByEmail(string email);
+        Task<UserApp> CreateUserAsync(UserApp users);
+        Task<UserApp> GetUserByNameAsync(string userName);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.User.Command;
+﻿using Application.Dto;
+using Application.User.Command;
 using AutoMapper;
 using Domain.Entity;
 using Domain.Repository;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Application.User.CommandHandlers
 {
-    public class CreateUserHandlers : IRequestHandler<CreateUser, Users>
+    public class CreateUserHandlers : IRequestHandler<CreateUser, UserApp>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -17,10 +18,10 @@ namespace Application.User.CommandHandlers
             _mapper = mapper;
         }
 
-        public async Task<Users> Handle(CreateUser request, CancellationToken cancellationToken)
+        public async Task<UserApp> Handle(CreateUser request, CancellationToken cancellationToken)
         {
-            Users mappedUser=_mapper.Map<Users>(request);
-            Users createdUser = await _userRepository.AddAsync(mappedUser);
+            UserApp mappedUser=_mapper.Map<UserApp>(request);
+            UserApp createdUser = await _userRepository.CreateUserAsync(mappedUser);
             return createdUser;
         }
     }
