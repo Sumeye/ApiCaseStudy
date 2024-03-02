@@ -7,12 +7,18 @@ namespace Infrastructure.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _context;
+        protected  readonly DbContext _context;
         private readonly DbSet<TEntity> _dbset;
         public GenericRepository(AppDbContext context)
         {
             _context = context;
             _dbset = context.Set<TEntity>();
+        }
+
+        public void Add(TEntity entity)
+        {
+            _dbset.Add(entity);
+            _context.SaveChanges();
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)

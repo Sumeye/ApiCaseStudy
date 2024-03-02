@@ -8,6 +8,7 @@ namespace Domain.Repository
         Task<IEnumerable<TEntity>> GetAllAsync();
         IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> AddAsync(TEntity entity);
+        void Add(TEntity entity);
         void Remove(TEntity entity);
         TEntity Update(TEntity entity);
     }
