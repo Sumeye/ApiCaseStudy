@@ -2,7 +2,6 @@
 using Application.Services.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static Application.Services.Authencation.AuthentionResult;
 
 
 namespace API.Controllers

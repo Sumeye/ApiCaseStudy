@@ -1,5 +1,4 @@
-﻿using Application.Categories.Command;
-using Application.Dto;
+﻿using Application.Dto;
 using Application.Products.Command;
 using Application.Products.Queries;
 using Microsoft.AspNetCore.Authorization;

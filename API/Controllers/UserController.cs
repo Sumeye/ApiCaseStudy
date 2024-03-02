@@ -1,9 +1,5 @@
-﻿using Application.Categories.Command;
-using Application.Dto;
-using Application.Products.Command;
-using Application.User.Command;
+﻿using Application.User.Command;
 using Domain.Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
